@@ -176,3 +176,25 @@ def Convert_to_clock_y(m):
     if m == 12:
         a = 3
     return(a)
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+#function for producing nice, smoothed line plots sorted by categorical variable, of a continues (var_dist) variable
+def comp_dist(df_to_use, cat_to_subset, var_dist, figw,figh,linew):
+    plt.figure(figsize=(figw,figh))
+    sns.set_context( rc={"lines.linewidth": linew})
+
+    for grp in sorted(df_to_use[cat_to_subset].unique()):
+        grp_df = df_to_use.loc[df_to_use[cat_to_subset] == grp]
+
+        sns.distplot(grp_df[var_dist], hist=False, label=grp)
+        plt.xlim(0, 90)
+    plt.show()
+
+import math
+
+def getxy(day):
+    x = math.sin((180 - day * 0.9849521203830369)/180 * 3.141)
+    y = math.cos((180 - day * 0.9849521203830369)/180 * 3.141)
+    return x, y
